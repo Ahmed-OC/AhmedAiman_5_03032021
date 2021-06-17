@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/cart.js" defer ></script>
+  
   <title>Orinoco</title>
 </head>
 
@@ -33,11 +34,36 @@
   </div>
   <main class="mt-4">
     <div class="container">
-        <form>
+      <template id="modelcart">
+        <tr>
+          <td scope="row"><img id="cartimg" src="images/teddy_3.jpg" height="70px" width="90px"> </td>
+          <td id="cartname" class="align-middle">Mark</td>
+          <td id="cartprice" class="align-middle">Otto</td>
+          <td id="cartquantity" class="align-middle">@mdo</td>
+          <td id="carttotal" class="align-middle">@dd</td>
+          <td  class="align-middle"><button id="cartremove" type="button" class="btn btn-danger">Supprimer</button></td>
+        </tr>
+      </template>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Produit</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Quantité</th>          
+            <th scope="col">Prix total</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="cartbody">
+         
+        </tbody>
+      </table>
+        <form class="mt-4">
             <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputLName">Nom</label>
-                  <input type="text" class="form-control" id="inputLName" placeholder="Nom" required>
+                  <input type="text" class="form-control" id="inputLName" placeholder="Nom" required> 
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputFName">Prénom</label>
@@ -50,7 +76,7 @@
               </div>
             <div class="form-group">
               <label for="inputAddress">Adresse</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="5 avenue anatole france" required> 
+              <input type="text" class="form-control" id="inputAddress" placeholder="5 avenue anatole france" required>
             </div>
             
               <div class="form-group col-md-6">
