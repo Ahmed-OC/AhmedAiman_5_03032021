@@ -10729,6 +10729,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+* {
+  font-family: "Merriweather", serif;
+}
+
 .bg-primary-color {
   background-color: #f3e9f1;
 }

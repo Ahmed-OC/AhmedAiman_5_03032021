@@ -89,3 +89,125 @@ function showTeddy(teddy) {
       }
       document.getElementById("finalprice").textContent = finalprice+"€";
   }
+  function createcontact()
+  {
+    const contact = 
+    {
+    firstName : document.getElementById('firstName').value,
+    lastName : document.getElementById('lastName').value,
+    address : document.getElementById('address').value,
+    email : document.getElementById('email').value,
+    city : document.getElementById('city').value
+    }
+    console.log(contact);
+    return contact;
+  }
+  function createproducts()
+  {
+      const products = [];
+      for (var i = 0; i < localStorage.length; i++)
+      {
+        products.push(localStorage.key(i));
+      }
+      return products;
+  }
+  
+                                                       // Validation Regex du formulaire
+// Vérification de l'email
+function emailIsValid(value) {
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(value);
+}
+
+// Vérification d'un texte
+function textIsValid(value) {
+    const regex = /^[A-Za-z][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/;
+    return regex.test(value);
+}
+
+// Vérification d'une adresse
+function addressIsValid(value) {
+    const regex = /^([0-9]{1,})[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/;
+    return regex.test(value);
+}
+function validationform()
+{
+    let formisvalid= true;
+    let lastname = document.getElementById("lastName").value;
+    let firstname = document.getElementById("firstName").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let city = document.getElementById("city").value;
+    if (textIsValid(lastname))
+    {
+        document.getElementById("errorlname").innerText = "";
+    }
+    else
+    {
+        document.getElementById("errorlname").innerText = "Le nom est incorrect"
+        formisvalid = false;
+    }
+    if (textIsValid(firstname))
+    {
+        document.getElementById("errorfname").innerText = "";
+    }
+    else
+    {
+        document.getElementById("errorfname").innerText = "Le prenom est incorrect"
+        formisvalid = false;
+    }
+    if (emailIsValid(email))
+    {
+        document.getElementById("erroremail").innerText = "";
+    }
+    else
+    {
+        document.getElementById("erroremail").innerText = "L'email est incorrect"
+        formisvalid = false;
+    }
+    if (addressIsValid(address))
+    {
+        document.getElementById("erroraddress").innerText = "";
+    }
+    else
+    {
+        document.getElementById("erroraddress").innerText = "L'adresse est incorrecte"
+        formisvalid = false;
+    }
+    if (textIsValid(city))
+    {
+        document.getElementById("errorcity").innerText = "";
+    }
+    else
+    {
+        document.getElementById("errorcity").innerText = "La ville est incorrecte"
+        formisvalid = false;
+    }
+    return formisvalid;
+}
+const myForm = document.getElementById('myForm');
+myForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const order = {
+        contact : createcontact()
+        ,
+        products : createproducts(),
+    }
+    if(validationform())
+    {
+        fetch("http://localhost:3000/api/teddies/order", {
+        method : "POST",
+        body :  JSON.stringify(order),
+        headers : {
+            "Content-Type": "application/json",
+        }
+      })
+    .then((response) => response.json())
+    .then((json) => { 
+      document.location.href="confirmation.html?"+json.orderId;
+    })
+    .catch(() => {
+      alert(error)
+    })
+    }
+})
