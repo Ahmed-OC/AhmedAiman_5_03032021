@@ -28,12 +28,12 @@ function coverPage(teddies) {
             if ((localStorage.key(i))==teddy._id)
             {
                 console.log(teddy);
-                showTeddy(teddy);
+                cartfiller(teddy);
             }
         })
 
 }
-function showTeddy(teddy) {
+function cartfiller(teddy) {
     const elt = document.getElementById('modelcart');
 
     const dupNode = document.importNode(elt.content,true);
