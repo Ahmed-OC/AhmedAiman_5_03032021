@@ -47,21 +47,22 @@
           <td  class="align-middle"><button id="cartremove" type="button" class="btn btn-danger">Supprimer</button></td>
         </tr>
       </template>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Produit</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Quantité</th>          
-            <th scope="col">Prix total</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody id="cartbody">
-         
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table" >
+          <thead >
+            <tr>
+              <th scope="col">Produit</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prix</th>
+              <th scope="col">Quantité</th>
+              <th scope="col">Prix total</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="cartbody">
+          </tbody>
+        </table>
+    </div>
       <div  class="text-center"><strong>Prix du panier : <span id="finalprice"></span></strong>  </div>
         <form id="myForm" class="mt-4">
             <div class="form-row">

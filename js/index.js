@@ -3,6 +3,9 @@ async function init() {
     coverPage(products);
   }
   init();
+
+
+  // Effectue une requête Fetch de type GET à l’API permettant de récupérer les données des produits
   async function getProducts (){
     return fetch("http://localhost:3000/api/teddies")
     .then(function(res) {
@@ -12,15 +15,19 @@ async function init() {
     })
     .then((products)=>products)
     .catch(function(err) {
-      // Une erreur est survenue
+      console.log(err);
     });
   }
+
+  // Permet de passer la fonction showTeddy à chaque produit pour remplir la page
   function coverPage(products) {
     products.forEach((product) => {
-      displayProduct(product);
+      showTeddy(product);
     })
   }
-    function displayProduct(product) {
+
+  // Permet d’afficher sur la page le produit passé par cette fonction
+    function showTeddy(product) {
       const elt = document.getElementById('covermodel');
       const dupNode = document.importNode(elt.content,true);
       dupNode.getElementById('imgProduct').src= product.imageUrl;

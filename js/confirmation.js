@@ -6,6 +6,8 @@ async function init() {
     localStorage.clear();
   }
 init();
+
+// Effectue une requete Fetch de type GET à l’API permettant de recuperer les données des produits
 async function getTeddies (){
 return fetch("http://localhost:3000/api/teddies")
 .then(function(res) {
@@ -15,11 +17,11 @@ return fetch("http://localhost:3000/api/teddies")
 })
 .then((teddies)=>teddies)
 .catch(function(err) {
-    // Une erreur est survenue
+    console.log(err);
 });
-
 }
 
+// Calcul le prix total du panier et l’affiche
 async function showfinalprice(teddies)
 {
     let finalprice = 0;
@@ -35,6 +37,8 @@ async function showfinalprice(teddies)
     })
     document.getElementById("priceconfirmation").innerText= finalprice/100+"€";
 }
+
+// Affiche le numéro de commande généré lors de la validation de paiement
 async function showorderid(orderid)
 {
     document.getElementById("idconfirmation").textContent = orderid ;

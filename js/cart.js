@@ -7,6 +7,8 @@ async function init() {
     refreshquantity();
   }
 init();
+
+// Effectue une requete Fetch de type GET à l’API permettant de recuperer les données des produits
 async function getTeddies (){
 return fetch("http://localhost:3000/api/teddies")
 .then(function(res) {
@@ -16,11 +18,12 @@ return fetch("http://localhost:3000/api/teddies")
 })
 .then((teddies)=>teddies)
 .catch(function(err) {
-    // Une erreur est survenue
+    console.log(err);
 });
 
 }
 
+// Permet de passer la fonction cartfiller à chaque produit contenu dans le localstorage afin de remplir le panier
 function coverPage(teddies) {
     for (var i = 0; i < localStorage.length; i++) {
 
@@ -33,6 +36,8 @@ function coverPage(teddies) {
         })
 
 }
+}
+// Affiche dans le panier les produits passés par cette fonction 
 function cartfiller(teddy) {
     const elt = document.getElementById('modelcart');
 
@@ -46,7 +51,9 @@ function cartfiller(teddy) {
     dupNode.getElementById("carttotal").textContent= (teddy.price/100)*parseInt(localStorage.getItem(teddy._id))+"€"
     document.getElementById("cartbody").appendChild(dupNode);
     }
-  }
+  
+
+  // Au click sur le bouton "supprimer" l’élément se supprimera du panier
   function removefromcart()
   {
     let btn_del = document.querySelectorAll(".btn-danger");
@@ -56,13 +63,15 @@ function cartfiller(teddy) {
         let id_produit = localStorage.key(i);
         btn_del[i].addEventListener("click",function(){
            
-            console.log(id_produit);
+            console.log(id_produit);   
             localStorage.removeItem(id_produit);
             cartlines[i].innerHTML= "";
             refreshfinalprice();
         })
     }
   }
+
+  // Lors du changement de la quantité d’un produit le prix total pour la ligne du produit et le prix total du panier s’actualise 
   function refreshquantity()
   {
     let quantityinput = document.querySelectorAll(".quantityinput");
@@ -79,6 +88,8 @@ function cartfiller(teddy) {
         })
     }
   }
+
+  // Fonction qui permet d'actualiser le prix final du panier en fonction du contenu du panier 
   function refreshfinalprice()
   {
       let finalprice = 0;
@@ -89,6 +100,8 @@ function cartfiller(teddy) {
       }
       document.getElementById("finalprice").textContent = finalprice+"€";
   }
+
+  // Créer un objet contact avec les paramètres entrées par le client dans le formulaire
   function createcontact()
   {
     const contact = 
@@ -102,6 +115,8 @@ function cartfiller(teddy) {
     console.log(contact);
     return contact;
   }
+
+  // Créer une liste qui se remplit avec les ID présents dans le local storage
   function createproducts()
   {
       const products = [];
@@ -130,6 +145,8 @@ function addressIsValid(value) {
     const regex = /^([0-9]{1,})[^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/;
     return regex.test(value);
 }
+
+// Vérifie si chaque champ du formulaire est valide  , si non affiche un message d’erreur en dessous du champ erroné 
 function validationform()
 {
     let formisvalid= true;
@@ -185,6 +202,9 @@ function validationform()
     }
     return formisvalid;
 }
+
+/* Effectue une requete POST de la constante order qui contient les produits du panier ainsi que les informations du client si le 
+  formulaire a été validé au moment de la soumission du formulaire et nous envoie vers la page comfirmation */
 const myForm = document.getElementById('myForm');
 myForm.addEventListener('submit', function(e) {
     e.preventDefault();

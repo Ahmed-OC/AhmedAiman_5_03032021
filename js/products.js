@@ -1,12 +1,15 @@
 const idteddy= window.location.search.substring(1);
 async function init() {
     const teddies = await getTeddies();
-    coverPage(teddies);
-    document.getElementById("btnTeddy").addEventListener("click",addtocart);
+    showTeddy(teddies);
+    document.getElementById("btnTeddy").addEventListener("click",addtocart); // Au click sur le bouton ajouter au panier l’élement doit s’ajouter au panier
   }
 init();
+
+
+// Effectue une requête Fetch de type GET à l’API permettant de récupérer l'id des produits
 async function getTeddies (){
-return fetch("http://localhost:3000/api/teddies")
+return fetch("http://localhost:3000/api/teddies/"+idteddy)
 .then(function(res) {
     if (res.ok) {
     return res.json();
@@ -14,20 +17,12 @@ return fetch("http://localhost:3000/api/teddies")
 })
 .then((teddies)=>teddies)
 .catch(function(err) {
-    // Une erreur est survenue
+    console.log(err);
 });
 
 }
 
-function coverPage(teddies) {
-    teddies.forEach((teddy) => {
-      if (teddy._id==idteddy)
-      {
-          console.log(teddy)
-          showTeddy(teddy)
-      }
-    })
-}
+// Permet d’afficher sur la page le produit passé par cette fonction
 function showTeddy(teddy) {
     const elt = document.getElementById('productsmodel');
 
@@ -44,21 +39,16 @@ function showTeddy(teddy) {
         console.log(color);
 
         console.log(dupNode);
-        if(color=="Pale brown")
-        {
-            color="#cb7e49"
-        }
-        if(color=="Dark brown")
-        {
-            color="#3f2412"
-        }
+
         const colors = document.getElementById('colorsmodel');
         const dupColors = document.importNode(colors.content,true);
-        dupColors.getElementById("colordiv").style.background=color;
+        dupColors.getElementById("colordiv").textContent=color;
         document.getElementById("colors").appendChild(dupColors);
     })
 
   }
+
+  // Permet d'ajouter au localstorage le produit qui est affiché et d'indenter son nombre si il est deja present dans le localstorage
   function addtocart(){
     if (localStorage.getItem(idteddy))
     {
